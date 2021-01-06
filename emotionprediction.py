@@ -1,19 +1,17 @@
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
-
-
 import face_recognition
 from keras.models import model_from_json
 
 class_map = {
-    0 : 'surprise',
-    1 : 'fear',
-    2 : 'angry',
-    3 : 'neutral',
-    4 : 'sad',
-    5 : 'disgust',
-    6 : 'happy'
+    'surprise': 0,
+    'fear': 1,
+    'angry': 2,
+    'neutral': 3,
+    'sad': 4,
+    'disgust': 5,
+    'happy': 6
 }
 
 # load json and create model
@@ -63,7 +61,7 @@ def predict_emotion(image_path, trained_model, return_image=False):
 
 
 image_size = (48, 48) # (width, height)
-emotion = 'test'
+
 
 def preprocess_image(image):
     if len(image.shape) > 2:
@@ -90,9 +88,9 @@ def plot_image_and_emotion(image, label, prediction):
     
     plt.show()
 
-def predictionFun(testImagePath):
-    prediction, original_image, using_image = predict_emotion(testImagePath.format(emotion), loaded_model, return_image=True)
-    predicted_arr = prediction[0]
-    result = (np.amax(predicted_arr))
-    result = np.where(predicted_arr == result)
-    return (class_map[result[0][0]])
+emotion = 'neutral'
+prediction, original_image, using_image = predict_emotion("__results___47_0.png".format(emotion), loaded_model, return_image=True)
+
+plt.figure(figsize = (10,10))
+plt.imshow(original_image)
+plot_image_and_emotion(using_image[0], emotion, prediction[0])
