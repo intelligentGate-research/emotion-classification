@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 import numpy as np
+from emotionprediction import predictionFun
 
 app = Flask(__name__)
 UPLOAD_FOLDER = './UPLOAD_FOLDER/'
@@ -16,7 +17,9 @@ def get_image():
     photo = request.files['photo']
     photo.save(filename)
     print('Image Saved..')
-    return 'image saved'
+    pred = predictionFun(filename)
+
+    return pred
 
 
 if __name__ == '__main__':
